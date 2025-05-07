@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carta Romántica Especial</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="bg-animation">
+        <div class="shape shape1"></div>
+        <div class="shape shape2"></div>
+        <div class="shape shape3"></div>
+        <div class="shape shape4"></div>
+        <div class="dots"></div>
+        <div class="lines"></div>
+        <div class="floating-hearts"></div>
+    </div>
+
+    <!-- Login Screen -->
+    <div class="container" id="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <i class="fas fa-heart heart-icon pulse"></i>
+                <i class="fas fa-heart heart-icon medium pulse"></i>
+                <i class="fas fa-heart heart-icon small pulse"></i>
+            </div>
+            
+            <div class="login-content">
+                <h2>BIENVENIDO</h2>
+                <p class="subtitle">Ingrese la contraseña para ver su mensaje especial</p>
+                
+                <div class="input-group">
+                    <input type="password" id="password" required>
+                    <label for="password">Contraseña</label>
+                </div>
+                
+                <button id="login-btn" class="btn">ENTRAR <i class="fas fa-heart"></i></button>
+                
+                <p id="error-msg" class="error-message"></p>
+                
+                <div class="divider">
+                    <span></span>
+                    <p>Una carta especial te espera</p>
+                    <span></span>
+                </div>
+                
+                <div class="mini-hearts">
+                    <i class="fas fa-heart"></i>
+                    <i class="fas fa-heart"></i>
+                    <i class="fas fa-heart"></i>
+                </div>
+                
+                <p class="romantic-quote">"El amor no se mira, se siente, y aún más cuando tu está junto a mi."</p>
+                
+                <div class="digital-date">
+                    <span id="current-date">2 de Mayo, 2025</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Envelope Screen (Initially Hidden) -->
+    <div class="container hidden" id="envelope-container">
+        <h1>Un Mensaje Especial Para Ti</h1>
+        
+        <div class="envelope-wrapper">
+            <div class="envelope" id="envelope">
+                <div class="envelope-top">
+                    <div class="heart"></div>
+                </div>
+                
+                <div class="letter" id="letter">
+                    <div class="letter-content">
+                        <h2>Para Mi Amor</h2>
+                        <p class="message">
+                            En este día especial, quiero decirte lo mucho que significas para mí.
+                            Cada momento a tu lado es un tesoro que guardo en mi corazón.
+                            Tu sonrisa ilumina mis días y tu amor transforma mi mundo.
+                        </p>
+                        
+                        <div class="heart-divider">
+                            <i class="fas fa-heart"></i><i class="fas fa-heart"></i><i class="fas fa-heart"></i>
+                        </div>
+                        
+                        <p class="message">
+                            Gracias por estar en mi vida y por compartir conmigo tantos momentos maravillosos.
+                            Eres mi inspiración, mi felicidad y mi amor eterno.
+                        </p>
+                        
+                        <div class="romantic-element">
+                            <div class="better-heart"></div>
+                        </div>
+                        
+                        <p class="signature">Con todo mi amor</p>
+                        
+                        <div class="date-stamp">
+                            <span class="calendar-heart-icon">
+                                <i class="fas fa-calendar-alt"></i>
+                                <i class="fas fa-heart"></i>
+                            </span>
+                            <span id="letter-date">2 de Mayo, 2025</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card-actions">
+            <p class="instructions">Haz clic en el sobre para abrirlo</p>
+            <div class="button-group">
+                <button id="poem-btn" class="btn round-btn" title="Ver poema romántico">
+                    <i class="fas fa-book-open"></i>
+                </button>
+                <button id="wish-btn" class="btn round-btn" title="Enviar deseo">
+                    <i class="fas fa-star"></i>
+                </button>
+                <button id="theme-btn" class="btn round-btn" title="Cambiar tema">
+                    <i class="fas fa-palette"></i>
+                </button>
+                <button id="logout-btn" class="btn secondary-btn">Volver <i class="fas fa-sign-out-alt"></i></button>
+            </div>
+        </div>
+        
+        <!-- Modal para poema -->
+        <div id="poem-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <h3>Nuestro Poema</h3>
+                <div class="poem-content">
+                    <p>
+                        Eres la luz que ilumina mi camino,<br>
+                        El suspiro que alivia mi pesar,<br>
+                        La razón de mi sonrisa al despertar,<br>
+                        Y mi último pensamiento al dormir.
+                    </p>
+                    <p>
+                        Tu mirada es mi cielo estrellado,<br>
+                        Tu voz, la melodía que alegra mi ser,<br>
+                        Tus manos, el refugio de mis miedos,<br>
+                        Y tu corazón, mi hogar verdadero.
+                    </p>
+                    <p>
+                        Te amo más allá del tiempo,<br>
+                        Con cada latido y cada aliento,<br>
+                        Hoy, mañana y siempre.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Modal para deseos -->
+        <div id="wish-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <h3>Envía un Deseo al Universo</h3>
+                <div class="wish-container">
+                    <textarea id="wish-text" placeholder="Escribe tu deseo aquí..."></textarea>
+                    <button id="send-wish-btn" class="btn">Enviar Deseo</button>
+                    <div class="wish-animation-container"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Contador -->
+        <div class="love-counter">
+            <div class="counter-content">
+                <h3>Tiempo Juntos</h3>
+                <div class="counter-values">
+                    <div class="counter-item">
+                        <span id="days-count">0</span>
+                        <span class="counter-label">Días</span>
+                    </div>
+                    <div class="counter-item">
+                        <span id="hours-count">0</span>
+                        <span class="counter-label">Horas</span>
+                    </div>
+                    <div class="counter-item">
+                        <span id="minutes-count">0</span>
+                        <span class="counter-label">Minutos</span>
+                    </div>
+                </div>
+                <p>Cada momento a tu lado es un tesoro</p>
+            </div>
+        </div>
+        
+<!-- Modal de aniversario -->
+<div id="anniversary-modal" class="modal">
+    <div class="modal-content anniversary-modal-content">
+        <span class="close-btn">&times;</span>
+        <h3>¡Feliz Primer Aniversario!</h3>
+        <div class="anniversary-content">
+            <div class="anniversary-hearts">
+                <i class="fas fa-heart"></i>
+                <i class="fas fa-heart"></i>
+                <i class="fas fa-heart"></i>
+            </div>
+            <p>Un año de momentos maravillosos juntos.</p>
+            <p>Un año de amor, risas y sueños compartidos.</p>
+            <p>Gracias por hacer de este tiempo algo tan especial.</p>
+            
+            <div class="anniversary-photo">
+                <div class="photo-item">
+                    <img src="imagenes/img1.jpg" alt="Nosotros" style="width:100%; object-fit:cover;">
+                </div>
+                <div class="photo-item">
+                    <img src="imagenes/img2.jpg" alt="Nosotros" style="width:100%; object-fit:cover;">
+                </div>
+                <div class="photo-item">
+                    <img src="imagenes/img3.jpg" alt="Nosotros" style="width:100%; object-fit:cover;">
+                </div>
+            </div>
+            
+            <div class="music-player">
+                <h4>Nuestra Canción</h4>
+                <div class="song-details">
+                    <div class="song-thumbnail">
+                        <img src="https://i.ytimg.com/vi/VGhijvA4XTU/hqdefault.jpg" alt="Juntos - Juanes">
+                    </div>
+                    <div class="song-info">
+                        <div class="song-title-container">
+                            <span class="song-title">Juntos - Juanes</span>
+                            <a href="https://www.youtube.com/watch?v=VGhijvA4XTU" class="youtube-link" target="_blank">
+                                <i class="fab fa-youtube"></i> Ver en YouTube
+                            </a>
+                        </div>
+                        <div class="player-controls">
+                            <button id="play-pause-btn" class="btn">
+                                <i class="fas fa-play"></i>
+                            </button>
+                            <div class="progress-container">
+                                <div class="progress-bar">
+                                    <div class="progress" id="song-progress"></div>
+                                </div>
+                                <div class="time-display">
+                                    <span id="current-time">0:00</span> / <span id="duration">4:02</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Botón flotante para aniversario -->
+<div id="anniversary-button" class="anniversary-button">
+    <i class="fas fa-gift"></i>
+    <span>¡Aniversario!</span>
+</div>
+
+<!-- Fireworks Canvas para los fuegos artificiales -->
+<canvas id="fireworks-canvas" class="hidden"></canvas>
+
+<script src="script.js"></script>
+</body>
+</html>
