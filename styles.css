@@ -1535,3 +1535,382 @@ body.theme-gold {
     font-style: italic;
 }
 
+/* Estilos para el modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.7);
+  overflow: auto;
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.boyfriendday-modal-content {
+  position: relative;
+  background: linear-gradient(145deg, #ffffff 0%, #f9f4ff 100%);
+  border-radius: 28px;
+  padding: 2.5rem 2rem;
+  box-shadow: 0 15px 50px rgba(130, 56, 236, 0.22);
+  color: #33225a;
+  max-width: 440px;
+  width: 90%;
+  margin: 5vh auto;
+  max-height: 90vh; /* Altura máxima del 90% de la ventana */
+  overflow-y: auto; /* Permitir scroll vertical */
+  animation: modalDrop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  scrollbar-width: thin; /* Para Firefox */
+  scrollbar-color: #8338ec rgba(131, 56, 236, 0.1); /* Para Firefox */
+}
+
+/* Personalizar la barra de desplazamiento para navegadores WebKit */
+.boyfriendday-modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.boyfriendday-modal-content::-webkit-scrollbar-track {
+  background: rgba(131, 56, 236, 0.1);
+  border-radius: 10px;
+}
+
+.boyfriendday-modal-content::-webkit-scrollbar-thumb {
+  background-color: #8338ec;
+  border-radius: 10px;
+}
+
+@keyframes modalDrop {
+  from { 
+    opacity: 0;
+    transform: translateY(-50px); 
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0); 
+  }
+}
+
+/* Corazón SVG grande y animado */
+.boyfriendday-heart-anim {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 1em auto;
+  width: 100%;
+  z-index: 1;
+  animation: heart-pop 1.8s cubic-bezier(.65,-0.1,.41,1.33);
+}
+
+.boyfriendday-heart-anim svg {
+  display: block;
+  filter: drop-shadow(0 0 18px rgba(162, 89, 236, 0.6));
+  animation: heart-beat 1.8s infinite;
+}
+
+/* Corazón del final */
+.boyfriendday-bottom-heart-anim {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1.5em auto 0.5em auto;
+  width: 100%;
+  z-index: 1;
+}
+
+.boyfriendday-bottom-heart-anim svg {
+  display: block;
+  width: 110px; 
+  height: 90px;
+  filter: drop-shadow(0 0 12px rgba(162, 89, 236, 0.5));
+  animation: heart-float 3s infinite alternate ease-in-out;
+}
+
+@keyframes heart-float {
+  0% { transform: translateY(0) rotate(-3deg); }
+  100% { transform: translateY(-10px) rotate(3deg); }
+}
+
+@keyframes heart-beat {
+  0%, 100% { transform: scale(1);}
+  15% { transform: scale(1.14);}
+  30% { transform: scale(0.97);}
+  45% { transform: scale(1.09);}
+  60% { transform: scale(0.98);}
+  75% { transform: scale(1.06);}
+}
+
+@keyframes heart-pop {
+  0% { opacity:0; transform: scale(0.7) translateY(-20px);}
+  60% { opacity:1; transform: scale(1.1) translateY(5px);}
+  100% { opacity:1; transform: scale(1) translateY(0);}
+}
+
+.boyfriendday-title {
+  text-align: center;
+  font-family: 'Montserrat', 'Arial', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #8338ec 0%, #b668f1 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 0.6em;
+  letter-spacing: 0.03em;
+  text-shadow: 0 2px 14px #fff7, 0 1px 4px #c3a6f7;
+  animation: bdTitleGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes bdTitleGlow {
+  0% { text-shadow: 0 2px 14px rgba(255, 255, 255, 0.4), 0 1px 4px rgba(195, 166, 247, 0.5);}
+  100% { text-shadow: 0 6px 28px rgba(205, 177, 255, 0.8), 0 2px 10px rgba(195, 166, 247, 0.7);}
+}
+
+.boyfriendday-hearts {
+  text-align: center;
+  margin-bottom: 1.5em;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.boyfriendday-hearts i {
+  font-size: 2.2rem;
+  color: #8338ec;
+}
+
+.boyfriendday-hearts i:nth-child(1) {
+  animation: bdHeartBeat 1.8s infinite alternate;
+  animation-delay: 0s;
+}
+
+.boyfriendday-hearts i:nth-child(2) {
+  animation: bdHeartBeat 1.8s infinite alternate;
+  animation-delay: 0.6s;
+}
+
+.boyfriendday-hearts i:nth-child(3) {
+  animation: bdHeartBeat 1.8s infinite alternate;
+  animation-delay: 1.2s;
+}
+
+@keyframes bdHeartBeat {
+  0% { transform: scale(1);}
+  100% { transform: scale(1.25) translateY(-5px);}
+}
+
+.boyfriendday-message {
+  font-family: 'Dancing Script', cursive, sans-serif;
+  font-size: 1.45em;
+  text-align: center;
+  margin: 0.8em 0 1.2em 0;
+  line-height: 1.6;
+  color: #402f68;
+}
+
+.boyfriendday-love {
+  color: #8338ec;
+  font-weight: bold;
+}
+
+.boyfriendday-blue-heart {
+  color: #3b82f6;
+  font-size: 1.2em;
+  display: inline-block;
+  animation: blueHeartBeat 2s infinite alternate;
+}
+
+@keyframes blueHeartBeat {
+  0% { transform: scale(1);}
+  100% { transform: scale(1.3);}
+}
+
+.boyfriendday-photo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1.5em auto;
+  position: relative;
+  width: 100%;
+}
+
+.boyfriendday-img-container {
+  position: relative;
+  border-radius: 20px;
+  padding: 8px;
+  background: linear-gradient(145deg, #a259ec 0%, #8338ec 100%);
+  box-shadow: 0 8px 25px rgba(130, 56, 236, 0.25);
+  animation: photoGlow 3s infinite alternate;
+  width: 100%; /* Para que ocupe todo el ancho disponible */
+}
+
+@keyframes photoGlow {
+  0% { box-shadow: 0 8px 25px rgba(130, 56, 236, 0.25);}
+  100% { box-shadow: 0 12px 30px rgba(130, 56, 236, 0.4);}
+}
+
+.boyfriendday-img {
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.boyfriendday-img:hover {
+  transform: scale(1.02);
+}
+
+/* Botón fuera del modal */
+.boyfriendday-btn {
+  margin: 2em auto;
+  display: block;
+  background: linear-gradient(90deg, #8338ec 0%, #a259ec 100%);
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  padding: 1em 2.8em;
+  font-size: 1.25em;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  box-shadow: 0 8px 20px rgba(131, 56, 236, 0.3);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.boyfriendday-btn::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 60%);
+  transform: rotate(30deg);
+  transition: transform 0.5s ease;
+}
+
+.boyfriendday-btn:hover {
+  background: linear-gradient(90deg, #7629e0 0%, #9941e9 100%);
+  color: #fff;
+  box-shadow: 0 10px 30px rgba(131, 56, 236, 0.5);
+  transform: translateY(-3px);
+}
+
+.boyfriendday-btn:hover::before {
+  transform: rotate(0deg);
+}
+
+/* Decoración de fondo */
+.boyfriendday-bg-decor {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.4;
+}
+
+.boyfriendday-particle {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: #a259ec;
+  border-radius: 50%;
+  opacity: 0.2;
+}
+
+.boyfriendday-particle:nth-child(1) {
+  top: 10%;
+  left: 10%;
+  animation: float 10s infinite ease-in-out;
+}
+
+.boyfriendday-particle:nth-child(2) {
+  top: 20%;
+  right: 15%;
+  width: 18px;
+  height: 18px;
+  animation: float 13s infinite ease-in-out reverse;
+}
+
+.boyfriendday-particle:nth-child(3) {
+  bottom: 20%;
+  left: 20%;
+  width: 15px;
+  height: 15px;
+  animation: float 12s infinite ease-in-out 2s;
+}
+
+.boyfriendday-particle:nth-child(4) {
+  bottom: 15%;
+  right: 10%;
+  animation: float 9s infinite ease-in-out 1s;
+}
+
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #8338ec;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  z-index: 10; /* Asegurar que esté por encima de otros elementos */
+}
+
+.close-btn:hover {
+  background-color: rgba(131, 56, 236, 0.1);
+  transform: rotate(90deg);
+}
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(10px, 10px) rotate(5deg); }
+  50% { transform: translate(0, 15px) rotate(0deg); }
+  75% { transform: translate(-10px, 5px) rotate(-5deg); }
+}
+
+/* Para dispositivos móviles */
+@media (max-width: 480px) {
+  .boyfriendday-modal-content {
+    padding: 2rem 1.5rem;
+    margin: 3vh auto;
+    max-height: 94vh;
+  }
+  
+  .boyfriendday-title {
+    font-size: 1.8rem;
+  }
+  
+  .boyfriendday-message {
+    font-size: 1.2em;
+  }
+  
+  .boyfriendday-heart-anim svg {
+    width: 120px;
+    height: 100px;
+  }
+  
+  .boyfriendday-bottom-heart-anim svg {
+    width: 90px;
+    height: 80px;
+  }
+}

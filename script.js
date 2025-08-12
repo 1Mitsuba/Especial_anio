@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Referencias a elementos principales
     const loginContainer = document.getElementById('login-container');
     const envelopeContainer = document.getElementById('envelope-container');
     const envelope = document.getElementById('envelope');
@@ -17,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const letterDateSpan = document.getElementById('letter-date');
     
     // Actualizar la fecha actual - usamos la fecha proporcionada
-    const currentDate = new Date('2025-05-02T03:48:04.000Z'); // Fecha proporcionada
+    const currentDate = new Date('2025-05-02T03:48:04.000Z');
     const options = { day: 'numeric', month: 'long', year: 'numeric' };
     const formattedDate = currentDate.toLocaleDateString('es-ES', options);
     
@@ -39,6 +40,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Creación de corazones flotantes
     createFloatingHearts();
+    
+    // Inicializar las características especiales
+    setupAnniversaryFeatures();
+    setupBoyfriendDayFeatures();
     
     // Manejar el inicio de sesión
     loginBtn.addEventListener('click', function() {
@@ -245,8 +250,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 3000);
     }
     
-    // Efecto de notificación
-    function showToast(message) {
+    // Efecto de notificación (función global disponible para otras características)
+    window.showToast = function(message) {
         // Crear el elemento toast
         const toast = document.createElement('div');
         toast.className = 'toast';
@@ -264,6 +269,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 }, 300);
             }, 2000);
         }, 10);
+    };
+    
+    // También mantener la versión local para compatibilidad
+    function showToast(message) {
+        window.showToast(message);
     }
     
     // Actualizar contador
@@ -398,15 +408,20 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     `;
     document.head.appendChild(style);
+});
 
-    // Código para la celebración de aniversario con audio desde la carpeta "music"
-// No requiere cambios en el HTML existente
-
+// Código para la celebración de aniversario
 function setupAnniversaryFeatures() {
     // Referencias a elementos
     const anniversaryModal = document.getElementById('anniversary-modal');
     const anniversaryBtn = document.getElementById('anniversary-button');
     const fireworksCanvas = document.getElementById('fireworks-canvas');
+    
+    // Verificar si los elementos existen
+    if (!anniversaryModal || !anniversaryBtn || !fireworksCanvas) {
+        console.log("Elementos de aniversario no encontrados");
+        return;
+    }
     
     // CONFIGURACIÓN DE FECHAS
     // Para pruebas: true = siempre visible, false = solo en la fecha real
@@ -450,39 +465,33 @@ function setupAnniversaryFeatures() {
 
     // Configuración inicial
     if (isAnniversaryTime()) {
-        if (anniversaryBtn) {
-            // Ya no está oculto
-            anniversaryBtn.classList.remove('hidden');
-            
-            // Mostrar automáticamente después de un retraso (solo la primera vez)
-            if (!sessionStorage.getItem('anniversaryShown')) {
-                setTimeout(() => {
-                    showAnniversaryModal();
-                    sessionStorage.setItem('anniversaryShown', 'true');
-                }, 2000);
-            }
+        // Ya no está oculto
+        anniversaryBtn.classList.remove('hidden');
+        
+        // Mostrar automáticamente después de un retraso (solo la primera vez)
+        if (!sessionStorage.getItem('anniversaryShown')) {
+            setTimeout(() => {
+                showAnniversaryModal();
+                sessionStorage.setItem('anniversaryShown', 'true');
+            }, 2000);
         }
         
         // Añadir evento al botón
-        if (anniversaryBtn) {
-            anniversaryBtn.addEventListener('click', showAnniversaryModal);
-        }
+        anniversaryBtn.addEventListener('click', showAnniversaryModal);
     }
     
     // Funciones para cerrar el modal
-    if (anniversaryModal) {
-        const closeBtn = anniversaryModal.querySelector('.close-btn');
-        if (closeBtn) {
-            closeBtn.addEventListener('click', hideAnniversaryModal);
-        }
-        
-        // Cerrar al hacer clic fuera del modal
-        anniversaryModal.addEventListener('click', function(event) {
-            if (event.target === anniversaryModal) {
-                hideAnniversaryModal();
-            }
-        });
+    const closeBtn = anniversaryModal.querySelector('.close-btn');
+    if (closeBtn) {
+        closeBtn.addEventListener('click', hideAnniversaryModal);
     }
+    
+    // Cerrar al hacer clic fuera del modal
+    anniversaryModal.addEventListener('click', function(event) {
+        if (event.target === anniversaryModal) {
+            hideAnniversaryModal();
+        }
+    });
     
     // Manejar el botón de reproducción
     const playPauseBtn = document.getElementById('play-pause-btn');
@@ -549,65 +558,47 @@ function setupAnniversaryFeatures() {
     audioElement.addEventListener('error', function(e) {
         console.error("Error al cargar el audio:", e);
         console.error("Código de error:", audioElement.error ? audioElement.error.code : "desconocido");
-        
-        // Códigos de error:
-        // 1 = MEDIA_ERR_ABORTED - La carga fue abortada por el usuario
-        // 2 = MEDIA_ERR_NETWORK - Error de red
-        // 3 = MEDIA_ERR_DECODE - Error de decodificación
-        // 4 = MEDIA_ERR_SRC_NOT_SUPPORTED - Formato no soportado
-        
-        if (audioElement.error && audioElement.error.code === 4) {
-            console.log("El formato M4A podría no ser soportado por este navegador");
-        }
     });
     
     // Función para mostrar el modal de aniversario
     function showAnniversaryModal() {
-        if (anniversaryModal) {
-            anniversaryModal.style.display = 'flex';
-            
-            // Iniciar elementos con animación
-            const elements = anniversaryModal.querySelectorAll('.anniversary-content > *');
-            elements.forEach((el, index) => {
-                el.classList.add('anniversary-animation');
-                el.style.animationDelay = `${index * 0.2}s`;
-            });
-            
-            // Mostrar fuegos artificiales
-            if (fireworksCanvas) {
-                fireworksCanvas.classList.remove('hidden');
-                initFireworks();
-            }
-            
-            // Reproducir música automáticamente con un pequeño retraso
-            setTimeout(() => {
-                audioElement.play()
-                    .then(() => {
-                        if (playPauseBtn) playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
-                    })
-                    .catch(err => {
-                        console.log("Error al reproducir automáticamente:", err);
-                    });
-            }, 800);
-        }
+        anniversaryModal.style.display = 'flex';
+        
+        // Iniciar elementos con animación
+        const elements = anniversaryModal.querySelectorAll('.anniversary-content > *');
+        elements.forEach((el, index) => {
+            el.classList.add('anniversary-animation');
+            el.style.animationDelay = `${index * 0.2}s`;
+        });
+        
+        // Mostrar fuegos artificiales
+        fireworksCanvas.classList.remove('hidden');
+        initFireworks();
+        
+        // Reproducir música automáticamente con un pequeño retraso
+        setTimeout(() => {
+            audioElement.play()
+                .then(() => {
+                    if (playPauseBtn) playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                })
+                .catch(err => {
+                    console.log("Error al reproducir automáticamente:", err);
+                });
+        }, 800);
     }
     
     // Ocultar el modal y detener todo
     function hideAnniversaryModal() {
-        if (anniversaryModal) {
-            anniversaryModal.style.display = 'none';
-            
-            // Pausar audio
-            audioElement.pause();
-            audioElement.currentTime = 0;
-            if (playPauseBtn) playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
-            
-            // Ocultar fuegos artificiales
-            if (fireworksCanvas) {
-                fireworksCanvas.classList.add('hidden');
-                stopFireworks();
-            }
-        }
+        anniversaryModal.style.display = 'none';
+        
+        // Pausar audio
+        audioElement.pause();
+        audioElement.currentTime = 0;
+        if (playPauseBtn) playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+        
+        // Ocultar fuegos artificiales
+        fireworksCanvas.classList.add('hidden');
+        stopFireworks();
     }
     
     // Sistema de fuegos artificiales
@@ -774,6 +765,239 @@ function setupAnniversaryFeatures() {
         }
     }
 }
-setupAnniversaryFeatures();
 
-});
+// Código para la celebración del Día del Novio
+function setupBoyfriendDayFeatures() {
+    console.log("Inicializando características del Día del Novio");
+    
+    // ==== ESPECIAL DÍA DEL NOVIO ====
+    const boyfriendDayModal = document.getElementById('boyfriendday-modal');
+    const boyfriendDayBtn = document.getElementById('boyfriendday-button');
+    const boyfriendDaySong = document.getElementById('boyfriendday-song');
+    
+    // Verificar que los elementos existan
+    if (!boyfriendDayModal) {
+        console.error("Modal del Día del Novio no encontrado");
+        return;
+    }
+    
+    if (!boyfriendDayBtn) {
+        console.error("Botón del Día del Novio no encontrado");
+        return;
+    }
+    
+    console.log("Elementos del Día del Novio encontrados correctamente");
+    
+    const closeBtn = boyfriendDayModal.querySelector('.close-btn');
+    
+    // Configuración de fechas
+    const testModeBoyfriend = false; // Para pruebas en desarrollo
+    // Fecha original: 3 de octubre de 2025
+    const boyfriendDayDate = new Date(2025, 9, 3);
+    const today = new Date();
+    
+    // Comprobar si es el día del novio o estamos en modo prueba
+    const isBoyfriendDayTime = () => {
+        if (testModeBoyfriend) return true; // Siempre mostrar en modo prueba
+        
+        return (
+            today.getFullYear() === boyfriendDayDate.getFullYear() &&
+            today.getMonth() === boyfriendDayDate.getMonth() &&
+            today.getDate() === boyfriendDayDate.getDate()
+        ) || (
+            // O dentro de un día después para no perder la sorpresa
+            today > boyfriendDayDate && 
+            (today - boyfriendDayDate) <= 1000 * 60 * 60 * 24
+        );
+    };
+    
+    // Inicialización al cargar
+    if (isBoyfriendDayTime()) {
+        console.log("Es tiempo de mostrar el día del novio, activando botón");
+        boyfriendDayBtn.classList.remove('hidden');
+        
+        // Mostrar automáticamente después de un retraso (solo la primera vez)
+        if (!sessionStorage.getItem('boyfriendDayShown')) {
+            setTimeout(() => {
+                showBoyfriendDayModal();
+                sessionStorage.setItem('boyfriendDayShown', 'true');
+            }, 2000);
+        }
+        
+        // Añadir evento al botón
+        boyfriendDayBtn.addEventListener('click', function() {
+            console.log("Botón del Día del Novio clickeado");
+            showBoyfriendDayModal();
+        });
+    }
+    
+    // Manejar cierre del modal
+    if (closeBtn) {
+        closeBtn.addEventListener('click', function() {
+            console.log("Botón de cerrar clickeado");
+            hideBoyfriendDayModal();
+        });
+    }
+    
+    // Cerrar al hacer clic fuera del modal
+    boyfriendDayModal.addEventListener('click', function(event) {
+        if (event.target === boyfriendDayModal) {
+            console.log("Click fuera del modal detectado");
+            hideBoyfriendDayModal();
+        }
+    });
+    
+    // Añadir CSS específico para el modal del Día del Novio
+    const boyfriendDayStyles = document.createElement('style');
+    boyfriendDayStyles.innerHTML = `
+        /* Estilos adicionales para el modal del día del novio */
+        #boyfriendday-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            overflow: auto;
+        }
+        
+        .boyfriendday-modal-content {
+            margin: 10vh auto;
+        }
+    `;
+    document.head.appendChild(boyfriendDayStyles);
+    
+    // Función para mostrar el modal
+    function showBoyfriendDayModal() {
+        console.log("Mostrando modal del Día del Novio");
+        boyfriendDayModal.style.display = 'flex';
+        
+        // Añadir animaciones a los elementos
+        animateModalElements();
+        
+        // Añadir efecto de corazones
+        addBoyfriendDayHeartBurst();
+        
+        // Reproducir audio
+        if (boyfriendDaySong) {
+            boyfriendDaySong.play()
+                .then(() => {
+                    console.log("Reproducción de audio iniciada");
+                })
+                .catch(err => {
+                    console.error("Error al reproducir audio:", err);
+                });
+        } else {
+            console.warn("Elemento de audio no encontrado");
+        }
+        
+        // Mostrar notificación
+        if (typeof window.showToast === 'function') {
+            window.showToast('¡Feliz Día del Novio!');
+        }
+    }
+    
+    // Función para ocultar el modal
+    function hideBoyfriendDayModal() {
+        console.log("Ocultando modal del Día del Novio");
+        boyfriendDayModal.style.display = 'none';
+        
+        // Detener audio
+        if (boyfriendDaySong) {
+            boyfriendDaySong.pause();
+            boyfriendDaySong.currentTime = 0;
+        }
+    }
+    
+    // Función para animar elementos del modal
+    function animateModalElements() {
+        console.log("Animando elementos del modal");
+        const elements = boyfriendDayModal.querySelectorAll('.boyfriendday-content > *, .boyfriendday-title, .boyfriendday-heart-anim');
+        elements.forEach((el, index) => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            el.style.transitionDelay = `${index * 0.2}s`;
+            
+            setTimeout(() => {
+                el.style.opacity = '1';
+                el.style.transform = 'translateY(0)';
+            }, 50);
+        });
+    }
+    
+    // Función para crear efecto de explosión de corazones
+    function addBoyfriendDayHeartBurst() {
+        const container = boyfriendDayModal.querySelector('.boyfriendday-modal-content');
+        if (!container) {
+            console.error("Contenedor para corazones no encontrado");
+            return;
+        }
+        
+        console.log("Añadiendo explosión de corazones");
+        
+        for (let i = 0; i < 15; i++) {
+            const heart = document.createElement('div');
+            heart.className = 'burst-heart boyfriend-heart';
+            heart.textContent = '♥';
+            heart.style.left = '50%';
+            heart.style.top = '50%';
+            heart.style.fontSize = `${Math.random() * 20 + 10}px`;
+            heart.style.color = getRandomHeartColor();
+            heart.style.position = 'absolute';
+            heart.style.zIndex = '20';
+            heart.style.transformOrigin = 'center';
+            heart.style.pointerEvents = 'none';
+            
+            // Ángulo y distancia aleatorios
+            const angle = Math.random() * Math.PI * 2;
+            const distance = Math.random() * 100 + 50;
+            const duration = Math.random() * 2 + 1;
+            
+            // Crear animación única para cada corazón
+            const animationName = `boyfriendBurst${Date.now()}${i}`;
+            const keyframes = `
+                @keyframes ${animationName} {
+                    0% { transform: translate(-50%, -50%) rotate(0deg); opacity: 0; }
+                    10% { opacity: 1; }
+                    100% { 
+                        transform: translate(
+                            calc(-50% + ${Math.cos(angle) * distance}px), 
+                            calc(-50% + ${Math.sin(angle) * distance}px)
+                        ) rotate(${Math.random() * 360}deg);
+                        opacity: 0;
+                    }
+                }
+            `;
+            
+            const style = document.createElement('style');
+            style.innerHTML = keyframes;
+            document.head.appendChild(style);
+            
+            heart.style.animation = `${animationName} ${duration}s forwards`;
+            container.appendChild(heart);
+            
+            // Eliminar después de la animación
+            setTimeout(() => {
+                if (container.contains(heart)) {
+                    container.removeChild(heart);
+                }
+                if (document.head.contains(style)) {
+                    document.head.removeChild(style);
+                }
+            }, duration * 1000);
+        }
+    }
+    
+    // Obtener un color aleatorio para los corazones
+    function getRandomHeartColor() {
+        const colors = [
+            '#ff66c4', '#ff3385', '#a239ca', '#7c26a6', '#b347d7'
+        ];
+        return colors[Math.floor(Math.random() * colors.length)];
+    }
+    
+    console.log("Configuración del Día del Novio completada");
+}

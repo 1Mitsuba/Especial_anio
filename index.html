@@ -255,6 +255,90 @@
 <!-- Fireworks Canvas para los fuegos artificiales -->
 <canvas id="fireworks-canvas" class="hidden"></canvas>
 
+<!-- Botón para abrir el modal - fuera del modal -->
+<button id="boyfriendday-button" class="boyfriendday-btn hidden">Ver Sorpresa</button>
+
+<!-- Modal que se abrirá al hacer clic en el botón -->
+<div id="boyfriendday-modal" class="modal">
+  <div class="modal-content boyfriendday-modal-content">
+    <span class="close-btn">&times;</span>
+    
+    <!-- Decoración de fondo -->
+    <div class="boyfriendday-bg-decor">
+      <div class="boyfriendday-particle"></div>
+      <div class="boyfriendday-particle"></div>
+      <div class="boyfriendday-particle"></div>
+      <div class="boyfriendday-particle"></div>
+    </div>
+    
+    <div class="boyfriendday-heart-anim">
+      <!-- SVG corazón animado superior -->
+      <svg viewBox="0 0 120 110" width="150" height="130">
+        <defs>
+          <linearGradient id="heartGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#a259ec" />
+            <stop offset="100%" stop-color="#8338ec" />
+          </linearGradient>
+        </defs>
+        <path id="heart"
+          d="M60 100
+             L20 60
+             A25 25 0 1 1 60 30
+             A25 25 0 1 1 100 60
+             Z"
+          fill="url(#heartGradient)"
+          stroke="#8338ec"
+          stroke-width="2"/>
+      </svg>
+    </div>
+    
+    <h3 class="boyfriendday-title">¡Feliz Día del Novio!</h3>
+    
+    <div class="boyfriendday-content">
+      <div class="boyfriendday-hearts">
+        <i class="fas fa-heart"></i>
+        <i class="fas fa-heart"></i>
+        <i class="fas fa-heart"></i>
+      </div>
+      
+      <p class="boyfriendday-message">
+        Hoy celebramos lo especial que eres, gracias por estar a mi lado.
+        <br><br>
+        <span class="boyfriendday-love">¡Te amo muchísimo!</span> 
+        <span class="boyfriendday-blue-heart">💙</span>
+      </p>
+      
+      <div class="boyfriendday-photo">
+        <div class="boyfriendday-img-container">
+          <img src="imagenes/img3.jpg" alt="Nosotros" class="boyfriendday-img">
+        </div>
+      </div>
+      
+      <!-- Corazón animado inferior -->
+      <div class="boyfriendday-bottom-heart-anim">
+        <svg viewBox="0 0 120 110" width="110" height="90">
+          <defs>
+            <linearGradient id="heartGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#b668f1" />
+              <stop offset="100%" stop-color="#7629e0" />
+            </linearGradient>
+          </defs>
+          <path id="heart2"
+            d="M60 100
+               L20 60
+               A25 25 0 1 1 60 30
+               A25 25 0 1 1 100 60
+               Z"
+            fill="url(#heartGradient2)"
+            stroke="#8338ec"
+            stroke-width="2"/>
+        </svg>
+      </div>
+    </div>
+    
+    <audio id="boyfriendday-song" style="display:none;" src="music/novio_song.mp3" preload="auto"></audio>
+  </div>
+</div>
 <script src="script.js"></script>
 </body>
 </html>
