@@ -793,7 +793,7 @@ function setupBoyfriendDayFeatures() {
     const closeBtn = boyfriendDayModal.querySelector('.close-btn');
     
     // Configuración de fechas
-    const testModeBoyfriend = true; // Para pruebas en desarrollo
+    const testModeBoyfriend = false; // Para pruebas en desarrollo
     // Fecha original: 3 de octubre de 2025
     const boyfriendDayDate = new Date(2025, 9, 3);
     const today = new Date();
