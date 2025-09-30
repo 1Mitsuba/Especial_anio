@@ -774,6 +774,8 @@ function setupBoyfriendDayFeatures() {
     const boyfriendDayModal = document.getElementById('boyfriendday-modal');
     const boyfriendDayBtn = document.getElementById('boyfriendday-button');
     const boyfriendDaySong = document.getElementById('boyfriendday-song');
+    // Nuevo: referencia al video
+    const boyfriendDayVideo = document.getElementById('boyfriendday-video');
     
     // Verificar que los elementos existan
     if (!boyfriendDayModal) {
@@ -791,7 +793,7 @@ function setupBoyfriendDayFeatures() {
     const closeBtn = boyfriendDayModal.querySelector('.close-btn');
     
     // Configuración de fechas
-    const testModeBoyfriend = false; // Para pruebas en desarrollo
+    const testModeBoyfriend = true; // Para pruebas en desarrollo
     // Fecha original: 3 de octubre de 2025
     const boyfriendDayDate = new Date(2025, 9, 3);
     const today = new Date();
@@ -892,7 +894,16 @@ function setupBoyfriendDayFeatures() {
         } else {
             console.warn("Elemento de audio no encontrado");
         }
-        
+
+        // Mostrar y reproducir el video
+        if (boyfriendDayVideo) {
+            boyfriendDayVideo.style.display = 'block';
+            boyfriendDayVideo.currentTime = 0;
+            boyfriendDayVideo.play().catch(err => {
+                console.warn("No se pudo reproducir el video automáticamente:", err);
+            });
+        }
+
         // Mostrar notificación
         if (typeof window.showToast === 'function') {
             window.showToast('¡Feliz Día del Novio!');
@@ -908,6 +919,12 @@ function setupBoyfriendDayFeatures() {
         if (boyfriendDaySong) {
             boyfriendDaySong.pause();
             boyfriendDaySong.currentTime = 0;
+        }
+        // Ocultar y pausar el video
+        if (boyfriendDayVideo) {
+            boyfriendDayVideo.pause();
+            boyfriendDayVideo.currentTime = 0;
+            boyfriendDayVideo.style.display = 'none';
         }
     }
     

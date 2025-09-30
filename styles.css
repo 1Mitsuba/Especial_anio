@@ -1731,41 +1731,87 @@ body.theme-gold {
   100% { transform: scale(1.3);}
 }
 
-.boyfriendday-photo {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 1.5em auto;
-  position: relative;
-  width: 100%;
+
+/* Galería flexible para imágenes y video en el modal del Día del Novio */
+
+.boyfriendday-gallery {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px 22px;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 1.5em auto;
+    width: 100%;
+    max-width: 760px;
 }
 
-.boyfriendday-img-container {
-  position: relative;
-  border-radius: 20px;
-  padding: 8px;
-  background: linear-gradient(145deg, #a259ec 0%, #8338ec 100%);
-  box-shadow: 0 8px 25px rgba(130, 56, 236, 0.25);
-  animation: photoGlow 3s infinite alternate;
-  width: 100%; /* Para que ocupe todo el ancho disponible */
+.boyfriendday-gallery-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(145deg, #a259ec 0%, #8338ec 100%);
+    border-radius: 20px;
+    padding: 10px;
+    box-shadow: 0 8px 25px rgba(130, 56, 236, 0.18);
+    animation: photoGlow 3s infinite alternate;
+    margin-bottom: 0;
+    min-width: 0;
 }
 
 @keyframes photoGlow {
-  0% { box-shadow: 0 8px 25px rgba(130, 56, 236, 0.25);}
-  100% { box-shadow: 0 12px 30px rgba(130, 56, 236, 0.4);}
+    0% { box-shadow: 0 8px 25px rgba(130, 56, 236, 0.18);}
+    100% { box-shadow: 0 12px 30px rgba(130, 56, 236, 0.32);}
 }
 
-.boyfriendday-img {
-  width: 100%;
-  height: auto;
-  border-radius: 16px;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.3s ease;
+
+.boyfriendday-img,
+.boyfriendday-video {
+    width: 100%;
+    height: 290px;
+    max-width: 340px;
+    border-radius: 16px;
+    object-fit: cover;
+    display: block;
+    background: #f7f3ff;
+    box-shadow: 0 2px 8px rgba(130, 56, 236, 0.08);
+    transition: transform 0.3s ease;
 }
 
-.boyfriendday-img:hover {
-  transform: scale(1.02);
+.boyfriendday-img:hover,
+.boyfriendday-video:hover {
+    transform: scale(1.02);
+}
+
+
+/* Responsive: una columna en móviles */
+@media (max-width: 900px) {
+    .boyfriendday-gallery {
+        grid-template-columns: 1fr;
+        gap: 14px;
+        max-width: 420px;
+    }
+    .boyfriendday-gallery-item {
+        max-width: 100%;
+        width: 100%;
+        padding: 7px;
+    }
+    .boyfriendday-img,
+    .boyfriendday-video {
+        height: 180px;
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .boyfriendday-gallery-item {
+        padding: 4px;
+        border-radius: 12px;
+    }
+    .boyfriendday-img,
+    .boyfriendday-video {
+        height: 140px;
+        border-radius: 10px;
+    }
 }
 
 /* Botón fuera del modal */
